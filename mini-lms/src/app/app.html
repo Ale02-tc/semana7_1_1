@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <h1 class="mb-3">{{ titulo }}</h1>
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Condición</th>
+        <th style="width: 120px;">Nota</th>
+        <th>Resultado</th>
+        <th>Créditos</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of estudiantes">
+        <td>{{ e.nombre }}</td>
+        
+        <!-- Muestra la edad -->
+        <td>{{ e.edad }} años</td>
+
+        <!-- Muestra si es mayor o menor de edad -->
+        <td>
+          <span class="badge" 
+                [class.bg-info]="esMayorDeEdad(e.edad)" 
+                [class.bg-warning]="!esMayorDeEdad(e.edad)">
+            {{ esMayorDeEdad(e.edad) ? 'Mayor de edad' : 'Menor de edad' }}
+          </span>
+        </td>
+
+        <!-- Campo para INGRESAR/EDITAR la nota -->
+        <td>
+          <input type="number" 
+                 class="form-control form-control-sm" 
+                 [(ngModel)]="e.nota" 
+                 min="0" 
+                 max="20" 
+                 placeholder="0-20">
+        </td>
+
+        <!-- Muestra el resultado actualizado en tiempo real -->
+        <td>
+          <span class="badge"
+                [class.bg-success]="evaluacionNota(e.nota) === 'Aprobado'"
+                [class.bg-danger]="evaluacionNota(e.nota) === 'Desaprobado'"
+                [class.bg-secondary]="evaluacionNota(e.nota) === 'Sin nota'">
+            {{ evaluacionNota(e.nota) }}
+          </span>
+        </td>
+
+        <td>{{ e.creditos }}</td>
+        <td>
+          <span class="badge"
+                [class.bg-success]="estado(e.creditos) === 'Matriculado'"
+                [class.bg-secondary]="estado(e.creditos) !== 'Matriculado'">
+            {{ estado(e.creditos) }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
